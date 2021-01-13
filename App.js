@@ -14,8 +14,6 @@ export default function App() {
   
   const [errorMessage,setErrorMessage] = useState(null)
   const[currentWeather,setCurrentWeather] = useState(null)
-
-  //  from kevin to celsius c=k-273.15
   const[unitsSystem, setUnitsSystem] = useState('metric')
 
 
@@ -37,15 +35,15 @@ export default function App() {
       const { latitude, longitude } = location.coords
     
       // reading the device location
-      alert(`Latitude : ${latitude}, Longitude : ${longitude}`)
+      // alert(`Latitude : ${latitude}, Longitude : ${longitude}`)
       
       
       // making an API call By geographic coordinates
-      // with units 
-      // const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid=${WEATHER_API_KEY}`;
+      // no units 
+      const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid=${WEATHER_API_KEY}`;
       
       // option to add C or F
-      const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid={WEATHER_API_KEY}`
+      // const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid={WEATHER_API_KEY}`
       
       
       const response = await fetch(weatherUrl) 
@@ -69,21 +67,27 @@ export default function App() {
 
   }
   if(currentWeather){
+
     // up to here
     const { main : {temp},} = currentWeather
     return (
+
       <View style={styles.container}>
-        <Text>{temp}</Text>
         <StatusBar style="auto" />
+        <View style= {styles.main}>
+        <Text>{temp}</Text>
+        </View>
       </View>
-    )}else{
-    return (
+    )
+  }
+    else{
+      return (
       <View style={styles.container}>
         <Text>{errorMessage}</Text>
         <StatusBar style="auto" />
       </View>
-    )
-  }
+      )
+    }
   
 }
 
@@ -94,4 +98,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+  main: {
+    justifyContent: 'center',
+    flex: 1,
+  }
+})
