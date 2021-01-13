@@ -10,10 +10,9 @@ export default function WeatherInfo({currentWeather}) {
     return (
         <View>
             <Text>{name}</Text>
+            <Text>{temp}°</Text>
             <Image style={styles.weatherIcon} source={{ uri: iconUrl }} />
            
-            <Text>{temp}°</Text>
-            
         </View>
     )
 }

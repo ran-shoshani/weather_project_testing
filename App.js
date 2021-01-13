@@ -74,6 +74,7 @@ export default function App() {
 
       <View style={styles.container}>
         <StatusBar style="auto" />
+        <Text style={styles.header}>Weather App</Text>
         <View style= {styles.main}>
           <WeatherInfo currentWeather = {currentWeather}/>
         </View>
@@ -97,6 +98,15 @@ const styles = StyleSheet.create({
     // backgroundColor: 'yellow',
     // alignItems: 'center',
     justifyContent: 'center',
+  },
+  header:{
+    paddingTop: 100,
+    marginBottom: 0,
+    fontSize: 30,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    color: "#61dafb",
+
   },
   main: {
     alignItems: 'center',
