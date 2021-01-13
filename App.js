@@ -42,8 +42,8 @@ export default function App() {
       
       // making an API call By geographic coordinates
       // no units 
-      const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid=${WEATHER_API_KEY}`;
-      
+      // const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid=${WEATHER_API_KEY}`;
+      const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid=${WEATHER_API_KEY}`
       // option to add C or F
       // const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid={WEATHER_API_KEY}`
       
@@ -70,15 +70,12 @@ export default function App() {
   }
   if(currentWeather){
 
-    // up to here
-    // const { main : {temp},} = currentWeather
     return (
 
       <View style={styles.container}>
         <StatusBar style="auto" />
         <View style= {styles.main}>
           <WeatherInfo currentWeather = {currentWeather}/>
-        {/* <Text>{temp}</Text> */}
         </View>
       </View>
     )
@@ -98,11 +95,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: 'yellow',
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'center',
   },
   main: {
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     flex: 1,
   }
 })
