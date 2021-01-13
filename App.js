@@ -6,12 +6,16 @@ import * as Location from 'expo-location'
 const WEATHER_API_KEY = '1ec1c7ccea60970957f86597d69e0230'
 // '005f68f5b34a435838cef66af54297e35'
 // 02fce8e3fb283a6f89e3dd66dd8744bf
+
+// openweathermap website link
 const BASE_WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather?'
 
 export default function App() {
   
   const [errorMessage,setErrorMessage] = useState(null)
   const[currentWeather,setCurrentWeather] = useState(null)
+
+  //  from kevin to celsius c=k-273.15
   const[unitsSystem, setUnitsSystem] = useState('metric')
 
 
@@ -35,12 +39,13 @@ export default function App() {
       // reading the device location
       alert(`Latitude : ${latitude}, Longitude : ${longitude}`)
       
-      // making an API call
-      // no units 
-      const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&appid=${WEATHER_API_KEY}`;
+      
+      // making an API call By geographic coordinates
+      // with units 
+      // const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid=${WEATHER_API_KEY}`;
       
       // option to add C or F
-      // const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid={WEATHER_API_KEY}`
+      const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid={WEATHER_API_KEY}`
       
       
       const response = await fetch(weatherUrl) 
@@ -48,16 +53,18 @@ export default function App() {
 
       if(response.ok){
         setCurrentWeather(result)
-        alert('all good')
+        
+        // to indicate response
+        // alert('all good')
       }else{
         // setErrorMessage(result.message)
-        setErrorMessage("line 54 : response negative")
+        setErrorMessage("line 58 : response negative")
       }
 
 
     } catch (error) 
     {
-      setErrorMessage("line 60 : response not ok!")
+      setErrorMessage("line 64 : response not ok!")
     }
 
   }
@@ -83,7 +90,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#33F9FF',
+    // backgroundColor: 'yellow',
     alignItems: 'center',
     justifyContent: 'center',
   },
