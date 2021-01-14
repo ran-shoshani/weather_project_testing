@@ -6,6 +6,7 @@ import WeatherInfo from './components/WeatherInfo'
 import ReloadIcon from './components/ReloadIcon'
 
 
+
 const WEATHER_API_KEY = '1ec1c7ccea60970957f86597d69e0230'
 // '005f68f5b34a435838cef66af54297e35'
 // 02fce8e3fb283a6f89e3dd66dd8744bf
@@ -30,6 +31,23 @@ export default function App() {
     setCurrentWeather(null)
     setErrorMessage(null)
 
+    // BackHandler exit button
+    const backAction = () => {
+      Alert.alert("Hold on!", "Are you sure you want to go back?", [
+        {
+          text: "Cancel",
+          onPress: () => null,
+          style: "cancel"
+        },
+        { text: "YES", onPress: () => BackHandler.exitApp() }
+      ]);
+      return true;
+    };
+
+
+
+
+
     try {
       let { status } = await Location.requestPermissionsAsync()
 
@@ -44,6 +62,13 @@ export default function App() {
 
 
       const { latitude, longitude } = location.coords
+
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+
+
 
       // reading the device location
       // alert(`Latitude : ${latitude}, Longitude : ${longitude}`)
@@ -90,6 +115,7 @@ export default function App() {
 
         <View style={styles.main}>
           <WeatherInfo currentWeather={currentWeather} />
+
         </View>
       </View>
     )
@@ -97,8 +123,8 @@ export default function App() {
   else {
     return (
       <View style={styles.container}>
-        < ReloadIcon load={load}/>
-        <Text>{errorMessage}</Text>
+        < ReloadIcon load={load} />
+        <Text style={{ textAlign: 'center' }}>{errorMessage}</Text>
         <StatusBar style="auto" />
       </View>
     )
@@ -110,7 +136,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: 'yellow',
-    // alignItems: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
   },
   header: {
@@ -121,6 +147,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: '#61dafb',
 
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: "bold"
   },
   main: {
     alignItems: 'center',

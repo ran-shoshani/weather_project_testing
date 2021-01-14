@@ -57,13 +57,14 @@ const styles = StyleSheet.create({
     },
     weatherCity: {
         fontSize: 20,
-        textTransform: 'uppercase',
+        textTransform: 'capitalize',
+        // textTransform: 'uppercase',
         fontWeight: 'bold',
     },
     weatherMain: {
         fontSize: 40,
         color: 'royalblue',
-        textTransform: 'uppercase',
+
         fontWeight: 'bold',
     }
 })
