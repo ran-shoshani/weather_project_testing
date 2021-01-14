@@ -8,8 +8,7 @@ import ReloadIcon from './components/ReloadIcon'
 
 
 const WEATHER_API_KEY = '1ec1c7ccea60970957f86597d69e0230'
-// '005f68f5b34a435838cef66af54297e35'
-// 02fce8e3fb283a6f89e3dd66dd8744bf
+
 
 // (open-weather-map website link)
 const BASE_WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather?'
@@ -31,9 +30,9 @@ export default function App() {
     setCurrentWeather(null)
     setErrorMessage(null)
 
-    // BackHandler exit button
+    // BackHandler API listener exit button
     const backAction = () => {
-      Alert.alert("Hold on!", "Are you sure you want to go back?", [
+      Alert.alert("Hold on!", "Are you sure you want to go back?\nDo you want leave Weather App?" , [
         {
           text: "Cancel",
           onPress: () => null,
@@ -69,19 +68,10 @@ export default function App() {
       );
 
 
-
-      // reading the device location
-      // alert(`Latitude : ${latitude}, Longitude : ${longitude}`)
-
-
       // making an API call By geographic coordinates
-      // no units 
-      // const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid=${WEATHER_API_KEY}`;
       const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid=${WEATHER_API_KEY}`
-      // option to add C or F
-      // const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid={WEATHER_API_KEY}`
-
-
+    
+      // fetching API call
       const response = await fetch(weatherUrl)
       const result = await response.json()
 
@@ -89,8 +79,7 @@ export default function App() {
         setCurrentWeather(result)
 
         // to indicate response
-        // alert('all good')
-        Alert('response good')
+        Alert('response = good')
       } else {
         // setErrorMessage(result.message)
         setErrorMessage("line 58 : response negative")
