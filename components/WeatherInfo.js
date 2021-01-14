@@ -15,7 +15,7 @@ export default function WeatherInfo({ currentWeather }) {
 
     return (
         <View style={styles.WeatherInfo}>
-            {/* Loction/City  */}
+            {/* Location/City  */}
             <Text style={styles.weatherCity}>{name}</Text>
 
              {/* date and time */}

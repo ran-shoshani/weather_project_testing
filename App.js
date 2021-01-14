@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button, Alert, BackHandler } from 'react-native';
 import * as Location from 'expo-location'
 import WeatherInfo from './components/WeatherInfo'
+import ReloadIcon from './components/ReloadIcon'
 
 
 const WEATHER_API_KEY = '1ec1c7ccea60970957f86597d69e0230'
@@ -13,22 +14,26 @@ const WEATHER_API_KEY = '1ec1c7ccea60970957f86597d69e0230'
 const BASE_WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather?'
 
 export default function App() {
-  
-  const [errorMessage,setErrorMessage] = useState(null)
-  const[currentWeather,setCurrentWeather] = useState(null)
-  const[unitsSystem, setUnitsSystem] = useState('metric')
+
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [currentWeather, setCurrentWeather] = useState(null)
+  const [unitsSystem, setUnitsSystem] = useState('metric')
 
 
- 
 
-  useEffect(() =>{
+
+  useEffect(() => {
     load()
   }, [])
-  async function load(){
+  async function load() {
+
+    setCurrentWeather(null)
+    setErrorMessage(null)
+
     try {
       let { status } = await Location.requestPermissionsAsync()
 
-      if (status !== 'granted'){
+      if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
 
         // display error on console
@@ -37,65 +42,68 @@ export default function App() {
       }
       const location = await Location.getCurrentPositionAsync()
 
-    
+
       const { latitude, longitude } = location.coords
-    
+
       // reading the device location
       // alert(`Latitude : ${latitude}, Longitude : ${longitude}`)
-      
-      
+
+
       // making an API call By geographic coordinates
       // no units 
       // const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid=${WEATHER_API_KEY}`;
       const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid=${WEATHER_API_KEY}`
       // option to add C or F
       // const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid={WEATHER_API_KEY}`
-      
-      
-      const response = await fetch(weatherUrl) 
+
+
+      const response = await fetch(weatherUrl)
       const result = await response.json()
 
-      if(response.ok){
+      if (response.ok) {
         setCurrentWeather(result)
-        
+
         // to indicate response
         // alert('all good')
         Alert('response good')
-      }else{
+      } else {
         // setErrorMessage(result.message)
         setErrorMessage("line 58 : response negative")
       }
 
 
-    } catch (error) 
-    {
+    } catch (error) {
       setErrorMessage("line 64 : response not ok!")
     }
 
   }
-  if(currentWeather){
+  if (currentWeather) {
 
     return (
 
       <View style={styles.container}>
         <StatusBar style="auto" />
         <Text style={styles.header}>Weather App</Text>
-       
-        <View style= {styles.main}>
-          <WeatherInfo currentWeather = {currentWeather}/>
+
+
+        < ReloadIcon load={load} />
+
+        <View style={styles.main}>
+          <WeatherInfo currentWeather={currentWeather} />
         </View>
       </View>
     )
   }
-    else{
-      return (
+  else {
+    return (
       <View style={styles.container}>
+        < ReloadIcon load={load}/>
         <Text>{errorMessage}</Text>
         <StatusBar style="auto" />
       </View>
-      )
-    }
-    
+    )
+  }
+
 }
 
 const styles = StyleSheet.create({
@@ -105,7 +113,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     justifyContent: 'center',
   },
-  header:{
+  header: {
     paddingTop: 100,
     marginBottom: 0,
     fontSize: 50,
