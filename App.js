@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, BackHandler } from 'react-native';
 import * as Location from 'expo-location'
 import WeatherInfo from './components/WeatherInfo'
 
@@ -9,7 +9,7 @@ const WEATHER_API_KEY = '1ec1c7ccea60970957f86597d69e0230'
 // '005f68f5b34a435838cef66af54297e35'
 // 02fce8e3fb283a6f89e3dd66dd8744bf
 
-// openweathermap website link
+// (open-weather-map website link)
 const BASE_WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather?'
 
 export default function App() {
@@ -18,6 +18,8 @@ export default function App() {
   const[currentWeather,setCurrentWeather] = useState(null)
   const[unitsSystem, setUnitsSystem] = useState('metric')
 
+
+ 
 
   useEffect(() =>{
     load()
@@ -28,6 +30,8 @@ export default function App() {
 
       if (status !== 'granted'){
         setErrorMsg('Permission to access location was denied');
+
+        // display error on console
         console.log('status not equal to granted')
         return
       }
@@ -56,6 +60,7 @@ export default function App() {
         
         // to indicate response
         // alert('all good')
+        Alert('response good')
       }else{
         // setErrorMessage(result.message)
         setErrorMessage("line 58 : response negative")
@@ -75,6 +80,7 @@ export default function App() {
       <View style={styles.container}>
         <StatusBar style="auto" />
         <Text style={styles.header}>Weather App</Text>
+       
         <View style= {styles.main}>
           <WeatherInfo currentWeather = {currentWeather}/>
         </View>
@@ -89,7 +95,7 @@ export default function App() {
       </View>
       )
     }
-  
+    
 }
 
 const styles = StyleSheet.create({
@@ -102,10 +108,10 @@ const styles = StyleSheet.create({
   header:{
     paddingTop: 100,
     marginBottom: 0,
-    fontSize: 30,
+    fontSize: 50,
     fontWeight: 'bold',
     alignSelf: 'center',
-    color: "#61dafb",
+    color: '#61dafb',
 
   },
   main: {
